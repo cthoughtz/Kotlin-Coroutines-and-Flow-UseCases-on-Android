@@ -14,7 +14,7 @@ fun main() = runBlocking {
 }
 
 suspend fun coroutine(number:Int,delay: Long) {
-    println("Corutine $number starts workd")
+    println("Coroutine $number starts workd")
     delay(delay)
-    println("Couroutine $number has finished")
+    println("Coroutine $number has finished")
 }
