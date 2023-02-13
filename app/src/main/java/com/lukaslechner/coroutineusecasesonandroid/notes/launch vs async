@@ -1,0 +1,6 @@
+launch vs async
+
+What is the difference between launch and async?
+There is not much that is different.
+launch returns a job ( no result)
+async returns a deferred which is a job with a result.
