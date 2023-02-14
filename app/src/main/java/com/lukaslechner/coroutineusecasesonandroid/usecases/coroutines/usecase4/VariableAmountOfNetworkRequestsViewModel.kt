@@ -30,13 +30,17 @@ class VariableAmountOfNetworkRequestsViewModel(
     fun performNetworkRequestsConcurrently() {
         uiState.value = UiState.Loading
 
-        viewModelScope.launch {
-           val recentVersions = mockApi.getRecentAndroidVersions()
-            recentVersions.map { androidVersion ->
-                async {
-                    mockApi.getAndroidVersionFeatures(androidVersion.apiLevel)
-                }
+        try {
+            viewModelScope.launch {
+               val recentVersions = mockApi.getRecentAndroidVersions()
+               val versionFeatures = recentVersions.map { androidVersion ->
+                    async {
+                        mockApi.getAndroidVersionFeatures(androidVersion.apiLevel)
+                    }
+                }.awaitAll()
             }
+        } catch (e: Exception) {
+            uiState.value = UiState.Error("Network Request Failed!")
         }
     }
 }
