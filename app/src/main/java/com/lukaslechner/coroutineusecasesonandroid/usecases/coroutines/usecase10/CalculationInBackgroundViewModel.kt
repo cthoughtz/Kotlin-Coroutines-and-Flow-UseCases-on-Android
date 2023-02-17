@@ -2,7 +2,10 @@ package com.lukaslechner.coroutineusecasesonandroid.usecases.coroutines.usecase1
 
 import androidx.lifecycle.viewModelScope
 import com.lukaslechner.coroutineusecasesonandroid.base.BaseViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import timber.log.Timber
 import java.math.BigInteger
 import kotlin.system.measureTimeMillis
 import kotlin.time.measureTime
@@ -15,25 +18,30 @@ class CalculationInBackgroundViewModel : BaseViewModel<UiState>() {
         val result: BigInteger = BigInteger.ONE
 
         viewModelScope.launch {
+            Timber.d("coroutine Context: $coroutineContext")
+
             val computationDuration = measureTimeMillis {
                 val result = calculateFactorialOf(factorialOf)
             }
 
             var resultString = ""
             val stringConversionDuration = measureTimeMillis {
-                resultString = result.toString()
+                resultString = withContext(Dispatchers.Default) {
+                    result.toString()
             }
 
             uiState.value = UiState.Success(resultString, computationDuration, stringConversionDuration)
         }
     }
 
-    private fun calculateFactorialOf(number: Int): BigInteger {
-        var factorial = BigInteger.ONE
+    private suspend fun calculateFactorialOf(number: Int) = withContext(Dispatchers.Default) {
+            var factorial = BigInteger.ONE
 
-        for (i in 1 .. number) {
-            factorial = factorial.multiply(BigInteger.valueOf(i.toLong()))
+            for (i in 1..number) {
+                factorial = factorial.multiply(BigInteger.valueOf(i.toLong()))
+            }
+        factorial
         }
-        return factorial
+
     }
 }
