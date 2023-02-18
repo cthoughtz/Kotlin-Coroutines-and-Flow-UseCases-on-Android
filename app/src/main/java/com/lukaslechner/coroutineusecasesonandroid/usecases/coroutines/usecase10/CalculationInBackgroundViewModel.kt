@@ -41,6 +41,7 @@ class CalculationInBackgroundViewModel : BaseViewModel<UiState>() {
             for (i in 1..number) {
                 factorial = factorial.multiply(BigInteger.valueOf(i.toLong()))
             }
+           Timber.d("Calculating Factorial Complated!")
         factorial
         }
 
