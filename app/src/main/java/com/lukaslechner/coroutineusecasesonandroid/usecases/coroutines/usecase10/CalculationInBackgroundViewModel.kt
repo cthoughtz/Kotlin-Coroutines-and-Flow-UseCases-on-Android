@@ -28,13 +28,14 @@ class CalculationInBackgroundViewModel : BaseViewModel<UiState>() {
             val stringConversionDuration = measureTimeMillis {
                 resultString = withContext(Dispatchers.Default) {
                     result.toString()
+                }
             }
 
             uiState.value = UiState.Success(resultString, computationDuration, stringConversionDuration)
         }
     }
 
-    private suspend fun calculateFactorialOf(number: Int) = withContext(Dispatchers.Default) {
+       private suspend fun calculateFactorialOf(number: Int) = withContext(Dispatchers.Default) {
             var factorial = BigInteger.ONE
 
             for (i in 1..number) {
@@ -44,4 +45,3 @@ class CalculationInBackgroundViewModel : BaseViewModel<UiState>() {
         }
 
     }
-}
