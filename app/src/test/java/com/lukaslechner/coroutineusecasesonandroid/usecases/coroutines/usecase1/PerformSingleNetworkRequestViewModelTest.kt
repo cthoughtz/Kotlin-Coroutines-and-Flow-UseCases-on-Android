@@ -2,6 +2,7 @@ package com.lukaslechner.coroutineusecasesonandroid.usecases.coroutines.usecase1
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.lukaslechner.coroutineusecasesonandroid.mock.mockAndroidVersions
+import com.lukaslechner.coroutineusecasesonandroid.usecases.coroutines.usecase1.utils.FakeErrorApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.resetMain
@@ -54,6 +55,28 @@ class PerformSingleNetworkRequestViewModelTest {
 
         Dispatchers.resetMain()
         dispatcher.cleanupTestCoroutines()
+    }
+
+    @Test
+    fun `should return Error when network request fails`() {
+        // Arrange
+        Dispatchers.setMain(TestCoroutineDispatcher())
+        val fakeApi = FakeErrorApi()
+        val viewModel = PerformSingleNetworkRequestViewModel(fakeApi)
+
+        observeViewModel(viewModel)
+
+
+        // Act
+        viewModel.performSingleNetworkRequest()
+
+        // Assert
+        assertEquals(
+            listOf(
+                UiState.Loading,
+                UiState.Error("Network request failed!")
+            ), receivedUiStates
+        )
     }
 
     private fun observeViewModel(viewModel: PerformSingleNetworkRequestViewModel) {
