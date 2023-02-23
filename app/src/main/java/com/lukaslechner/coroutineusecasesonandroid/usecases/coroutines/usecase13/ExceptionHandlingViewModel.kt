@@ -66,6 +66,9 @@ class ExceptionHandlingViewModel(
                         try {
                             it.await()
                         } catch (e: Exception) {
+                            if(e is CancellationException) {
+                                throw e
+                            }
                             Timber.e("Error loading feature data!")
                             null
                         }
@@ -77,4 +80,3 @@ class ExceptionHandlingViewModel(
 
         }
     }
-}
