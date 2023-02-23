@@ -43,6 +43,38 @@ class ExceptionHandlingViewModel(
     }
 
     fun showResultsEvenIfChildCoroutineFails() {
+        uiState.value = UiState.Loading
 
+        viewModelScope.launch {
+            supervisorScope {
+                val oreoFeaturesDeferred = async {
+                    api.getAndroidVersionFeatures(27)
+                }
+
+                val pieFeaturesDeferred = async {
+                    api.getAndroidVersionFeatures(28)
+                }
+
+                val android10FeaturesDeferred = async {
+                    api.getAndroidVersionFeatures(29)
+                }
+
+
+
+                val versionFeatures = listOfNotNull(oreoFeaturesDeferred,pieFeaturesDeferred,android10FeaturesDeferred)
+                    .map {
+                        try {
+                            it.await()
+                        } catch (e: Exception) {
+                            Timber.e("Error loading feature data!")
+                            null
+                        }
+                    }.filterNotNull()
+
+                uiState.value = UiState.Success(versionFeatures)
+            }
+        }
+
+        }
     }
 }
