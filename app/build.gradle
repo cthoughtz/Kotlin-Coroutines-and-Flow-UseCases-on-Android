@@ -54,6 +54,9 @@ android {
 
 dependencies {
 
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testImplementation 'junit:junit:4.12'
     def lifecycle_version = "2.4.1"
     def coroutines_version = "1.6.3"
 
