@@ -2,6 +2,7 @@ package com.lukaslechner.coroutineusecasesonandroid.usecases.coroutines.usecase1
 
 import androidx.lifecycle.viewModelScope
 import com.lukaslechner.coroutineusecasesonandroid.base.BaseViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -10,7 +11,9 @@ import java.math.BigInteger
 import kotlin.system.measureTimeMillis
 import kotlin.time.measureTime
 
-class CalculationInBackgroundViewModel : BaseViewModel<UiState>() {
+class CalculationInBackgroundViewModel(
+    val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
+) : BaseViewModel<UiState>() {
 
     fun performCalculation(factorialOf: Int) {
         uiState.value = UiState.Loading
