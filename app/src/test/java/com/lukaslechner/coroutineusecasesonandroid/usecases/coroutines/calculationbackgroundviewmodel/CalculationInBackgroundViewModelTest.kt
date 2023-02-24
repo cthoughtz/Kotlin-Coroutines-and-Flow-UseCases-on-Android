@@ -1,4 +1,4 @@
-package com.lukaslechner.coroutineusecasesonandroid.usecases.coroutines
+package com.lukaslechner.coroutineusecasesonandroid.usecases.coroutines.calculationbackgroundviewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.lukaslechner.coroutineusecasesonandroid.usecases.coroutines.usecase1.utils.MainCoroutineScopeRule
