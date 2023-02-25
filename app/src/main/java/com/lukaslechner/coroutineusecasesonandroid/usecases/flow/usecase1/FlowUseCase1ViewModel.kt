@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.lukaslechner.coroutineusecasesonandroid.base.BaseViewModel
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -14,11 +16,12 @@ class FlowUseCase1ViewModel(
     val currentStockPriceAsLiveData: MutableLiveData<UiState> = MutableLiveData()
 
     init {
-        viewModelScope.launch {
-            stockPriceDataSource.latestStockList.collect { stockList ->
-               currentStockPriceAsLiveData.value = UiState.Success(stockList)
+        stockPriceDataSource
+            .latestStockList
+            .onEach { stockList ->
+                currentStockPriceAsLiveData.value = UiState.Success(stockList)
             }
-        }
+            .launchIn(viewModelScope)
     }
 
 }
