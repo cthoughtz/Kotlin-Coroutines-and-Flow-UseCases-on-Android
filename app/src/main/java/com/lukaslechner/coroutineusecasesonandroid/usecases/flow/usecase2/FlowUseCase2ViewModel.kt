@@ -60,7 +60,7 @@ class FlowUseCase2ViewModel(
             stockList.filter { stock ->
                 stock.rank <= 10
             }
-        }
+        }.cancellable()
         .map { stockList ->
             UiState.Success(stockList) as UiState
         }.onStart {

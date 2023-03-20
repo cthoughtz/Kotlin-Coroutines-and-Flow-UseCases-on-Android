@@ -28,5 +28,4 @@ class FlowUseCase1ViewModel(
                 Timber.tag("Flow").d("Flow has completed.")
             }
             .asLiveData()
-
 }
