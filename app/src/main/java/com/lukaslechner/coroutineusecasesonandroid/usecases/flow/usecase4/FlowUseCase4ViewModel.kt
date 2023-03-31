@@ -2,11 +2,9 @@ package com.lukaslechner.coroutineusecasesonandroid.usecases.flow.usecase4
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
 import com.lukaslechner.coroutineusecasesonandroid.base.BaseViewModel
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onCompletion
-import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.*
 import timber.log.Timber
 
 class FlowUseCase4ViewModel(
@@ -23,6 +21,9 @@ class FlowUseCase4ViewModel(
         }
         .onCompletion {
             Timber.tag("Flow").d("Flow has completed.")
-        }
+        }.shareIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed()
+        )
 
 }
