@@ -1,0 +1,12 @@
+
+Cold Flows
+
+* Become active on collection
+* become inactive on cancellation of the collecting coroutine
+* emit individual emissions to every collector
+
+Hot Flows
+
+* Are active regardless of whether there are collectors
+* Stay active even when there is no more collector
+* Emissions are shared between all collectors
