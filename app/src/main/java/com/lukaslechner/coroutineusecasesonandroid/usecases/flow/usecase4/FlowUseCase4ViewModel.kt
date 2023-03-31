@@ -23,7 +23,8 @@ class FlowUseCase4ViewModel(
             Timber.tag("Flow").d("Flow has completed.")
         }.shareIn(
             scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5000)
+            started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5000),
+            replay = 1
         )
 
 }
